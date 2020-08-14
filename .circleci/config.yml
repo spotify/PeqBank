@@ -1,0 +1,115 @@
+version: 2.1
+
+orbs:
+  win: circleci/windows@2.2.0
+
+jobs:
+  buildlinuxclang:
+    docker:
+      - image: ubuntu:bionic
+    steps:
+      - checkout
+      - run:
+          name: Build Linux with clang
+          command: sh ci/linux-clang.sh
+      - store_artifacts:
+          path: build/source/PeqBankCLI
+      - store_artifacts:
+          path: build/source/libPeqBank.a
+      - run:
+          name: move test pcm data
+          command: mkdir pcm-out && mv test*.pcm pcm-out/
+      - store_artifacts:
+          path: pcm-out
+  buildlinuxgcc:
+    docker:
+      - image: ubuntu:bionic
+    steps:
+      - checkout
+      - run:
+          name: Build Linux with gcc
+          command: sh ci/linux-gcc.sh
+      - store_artifacts:
+          path: build/source/PeqBankCLI
+      - store_artifacts:
+          path: build/source/libPeqBank.a
+      - run:
+          name: move test pcm data
+          command: mkdir pcm-out && mv test*.pcm pcm-out/
+      - store_artifacts:
+          path: pcm-out
+  buildlinuxandroid:
+    docker:
+      - image: ubuntu:bionic
+    steps:
+      - checkout
+      - run:
+          name: Build Android with gcc
+          command: bash ci/linux-droid.sh
+      - store_artifacts:
+          path: build/source/PeqBankCLI
+      - store_artifacts:
+          path: build/source/libPeqBank.a
+  buildmac:
+    macos:
+      xcode: "11.5.0"
+    steps:
+      - checkout
+      - run:
+          name: Build OSX
+          command: bash ci/osx.sh
+      - store_artifacts:
+          path: build/source/Release/PeqBankCLI
+      - store_artifacts:
+          path: build/source/Release/libPeqBank.a
+      - run:
+          name: move test pcm data
+          command: mkdir pcm-out && mv test*.pcm pcm-out/
+      - store_artifacts:
+          path: pcm-out
+  buildmacios:
+    macos:
+      xcode: "11.5.0"
+    steps:
+      - checkout
+      - run:
+          name: Build iOS
+          command: bash ci/ios.sh
+      - store_artifacts:
+          path: build/source/Release/IOSPeqBankCLI
+      - store_artifacts:
+          path: build/source/Release/libPeqBank.a
+      - run:
+          name: move test pcm data
+          command: mkdir pcm-out && mv test*.pcm pcm-out/
+      - store_artifacts:
+          path: pcm-out
+  buildwindows:
+    executor:
+      name: win/default
+      shell: bash.exe
+    steps:
+      - checkout
+      - run:
+          name: Build Windows
+          command: bash ci/win.sh
+      - store_artifacts:
+          path: build/source/Release/PeqBankCLI.exe
+      - store_artifacts:
+          path: build/source/Release/PeqBank.lib
+      - run:
+          name: move test pcm data
+          command: mkdir pcm-out && mv test*.pcm pcm-out/
+      - store_artifacts:
+          path: pcm-out
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - buildlinuxclang
+      - buildlinuxgcc
+      - buildlinuxandroid
+      - buildmac
+      - buildmacios
+      - buildwindows
