@@ -182,10 +182,10 @@ int test2() {
 
     double t = 1.0 / sampling_rate;
     for (int i = 0; i < num_frames; i++) {
-      float sig1 = (float)(v1 * sin(TWOPI * f1 * i * t));
-      float sig2 = (float)(v2 * sin(TWOPI * f2 * i * t));
-      float sig3 = (float)(v3 * sin(TWOPI * f3 * i * t));
-      float sig4 = (float)(v4 * sin(TWOPI * f4 * i * t));
+      double sig1 = v1 * sin(TWOPI * f1 * i * t);
+      double sig2 = v2 * sin(TWOPI * f2 * i * t);
+      double sig3 = v3 * sin(TWOPI * f3 * i * t);
+      double sig4 = v4 * sin(TWOPI * f4 * i * t);
       signal_in[i * num_channels + j] = (int16_t)(gain * (sig1 + sig2 + sig3 + sig4) * 32767.0f);
       signal_out[i * num_channels + j] = 0;
     }
