@@ -50,7 +50,7 @@ There is no RAII support as it is currently meant to be C-compatible.
 add_subdirectory(PeqBank)
 ```
 
-Each script in [`ci/`][./ci] demonstrates how to build and the dependencies required per platform, although they do not account for integration into other build systems, like Gradle.
+Each script in [`ci/`](./ci) demonstrates how to build and the dependencies required per platform, although they do not account for integration into other build systems, like Gradle.
 
 ## Development
 
