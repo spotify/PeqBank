@@ -63,7 +63,7 @@ $ cmake .. -GXcode # or Ninja
 $ open PeqBank.xcodeproj # MacOS Only
 ```
 
-Check ths scripts in [`ci/`][./ci] for more platform-specific details.
+Check ths scripts in [`ci/`](./ci) for more platform-specific details.
 
 ## Contributing :mailbox_with_mail:
 Contributions are welcomed, have a look at the [CONTRIBUTING.md](CONTRIBUTING.md) document for more information.
