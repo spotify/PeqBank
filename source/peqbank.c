@@ -536,9 +536,9 @@ void compute_peq(t_peqbank *x, t_peq *p, int index) {
   float G2 = G * G;
   float w02 = w0 * w0;
 
-  float val1 = (float)(1.0f / fabs(G2 - GB2));
-  float val2 = (float)(fabs(G2 - G02));
-  float val3 = (float)(fabs(GB2 - G02));
+  float val1 = 1.0f / fabsf(G2 - GB2);
+  float val2 = fabsf(G2 - G02);
+  float val3 = fabsf(GB2 - G02);
   float val4 = (w02 - PI2) * (w02 - PI2);
 
   float mul1 = LOG_22 * p->bandwidth;
@@ -551,10 +551,10 @@ void compute_peq(t_peqbank *x, t_peq *p, int index) {
   float G12 = G1 * G1;
 
   float mul3 = G0 * G1;
-  float val5 = (float)(fabs(G2 - mul3));
-  float val6 = (float)(fabs(G2 - G12));
-  float val7 = (float)(fabs(GB2 - mul3));
-  float val8 = (float)(fabs(GB2 - G12));
+  float val5 = fabsf(G2 - mul3);
+  float val6 = fabsf(G2 - G12);
+  float val7 = fabsf(GB2 - mul3);
+  float val8 = fabsf(GB2 - G12);
   float val9 = sqrtf((val3 * val6) / (val8 * val2));
 
   float tan0 = tanf(w0 * 0.5f);
@@ -621,8 +621,8 @@ void compute_lphp(t_peqbank *x, t_lphp *f, int index) {
     Y2 = (-4 - 4 * RP * T - M * (T * T)) / D;
 
     // lopass to lopass or lopass to hipass transform
-    if (LH == HIGHPASS) K = (float)(-cos(W / 2.0f + 0.5f) / cos(W / 2.0f - 0.5f));
-    if (LH == LOWPASS) K = (float)(sin(0.5f - W / 2.0f) / sin(0.5f + W / 2.0f));
+    if (LH == HIGHPASS) K = -cosf(W / 2.0f + 0.5f) / cosf(W / 2.0f - 0.5f);
+    if (LH == LOWPASS) K = sinf(0.5f - W / 2.0f) / sinf(0.5f + W / 2.0f);
 
     D = 1.0f + Y1 * K - Y2 * (K * K);
     A0 = (X0 - X1 * K + X2 * (K * K)) / D;
